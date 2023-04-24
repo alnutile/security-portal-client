@@ -48,14 +48,14 @@ class SecurityPortalClient
         $this->userModel::orderBy('id')
             ->chunk(10, function ($users) {
                 $payload['data'] = $users;
-                $payload['source_domain'] = config("app.url");
+                $payload['source_domain'] = config('app.url');
 
                 $results = $this->http()->post($this->uri.'/client_users', $payload);
 
-                if($results->successful()) {
-                    logger("Success");
+                if ($results->successful()) {
+                    logger('Success');
                 } else {
-                    throw new RequestErrorException("Error with status " . $results->status());
+                    throw new RequestErrorException('Error with status '.$results->status());
                 }
         });
     }
