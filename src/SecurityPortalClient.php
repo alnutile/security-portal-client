@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use SundanceSolutions\SecurityPortalClient\Exceptions\MissingTokenException;
+use SundanceSolutions\SecurityPortalClient\Exceptions\RequestErrorException;
 
 class SecurityPortalClient
 {
@@ -44,12 +45,20 @@ class SecurityPortalClient
     public function syncUserNames()
     {
         $lastChecked = Cache::get('security_portal.sync_users');
-        if (! $lastChecked) {
-            $this->userModel::orderBy('id')
-                ->chunk(10, function ($users) {
+        $this->userModel::orderBy('id')
+            ->chunk(10, function ($users) {
                 $payload = $users;
-                $this->http()->post($this->uri.'/client_users', $payload);
-            });
-        }
+                logger("Requests", [
+                   "to" =>  $this->getUrl() . $this->uri.'/client_users'
+                ]);
+
+                $results = $this->http()->post($this->uri.'/client_users', $payload);
+
+                if($results->successful()) {
+                    logger("Success");
+                } else {
+                    throw new RequestErrorException("Error with status " . $results->status());
+                }
+        });
     }
 }

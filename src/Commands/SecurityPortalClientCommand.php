@@ -7,7 +7,7 @@ use SundanceSolutions\SecurityPortalClient\Facades\SecurityPortalClient;
 
 class SecurityPortalClientCommand extends Command
 {
-    public $signature = 'security-portal-client:sync-users';
+    public $signature = 'security-portal-client:sync';
 
     public $description = 'Sync Users';
 
