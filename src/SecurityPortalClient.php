@@ -47,10 +47,8 @@ class SecurityPortalClient
         $lastChecked = Cache::get('security_portal.sync_users');
         $this->userModel::orderBy('id')
             ->chunk(10, function ($users) {
-                $payload = $users;
-                logger("Requests", [
-                   "to" =>  $this->getUrl() . $this->uri.'/client_users'
-                ]);
+                $payload['data'] = $users;
+                $payload['source_domain'] = config("app.url");
 
                 $results = $this->http()->post($this->uri.'/client_users', $payload);
 
