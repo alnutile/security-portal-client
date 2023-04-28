@@ -33,4 +33,8 @@
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
+    <php>
+        <env name="SECURITY_PORTAL_TOKEN" value="foobar"/>
+    </php>
+
 </phpunit>

@@ -44,6 +44,7 @@ class SecurityPortalClient
 
     public function syncUserNames()
     {
+
         //@TODO $lastChecked = Cache::get('security_portal.sync_users');
         $this->userModel::orderBy('id')
             ->chunk(10, function ($users) {
