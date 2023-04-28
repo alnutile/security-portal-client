@@ -44,16 +44,14 @@ class SecurityPortalClient
 
     public function syncUserNames()
     {
-        $lastChecked = Cache::get('security_portal.sync_users');
+        //@TODO $lastChecked = Cache::get('security_portal.sync_users');
         $this->userModel::orderBy('id')
             ->chunk(10, function ($users) {
                 $payload['data'] = $users;
                 $payload['source_domain'] = config('app.url');
-
                 $results = $this->http()->post($this->uri.'/client_users', $payload);
-
                 if ($results->successful()) {
-                    logger('Success');
+                    //logger('Success');
                 } else {
                     throw new RequestErrorException('Error with status '.$results->status());
                 }
