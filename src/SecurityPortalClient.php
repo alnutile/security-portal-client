@@ -57,6 +57,6 @@ class SecurityPortalClient
                 } else {
                     throw new RequestErrorException('Error with status '.$results->status());
                 }
-        });
+            });
     }
 }

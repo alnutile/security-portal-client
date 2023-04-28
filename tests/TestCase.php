@@ -43,6 +43,6 @@ class TestCase extends Orchestra
     protected function defineEnvironment($app)
     {
         $app['config']->set('security-portal-client.users_model',
-        User::class);
+            User::class);
     }
 }
