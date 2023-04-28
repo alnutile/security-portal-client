@@ -45,17 +45,23 @@ class SecurityPortalClient
     public function syncUserNames()
     {
 
-        //@TODO $lastChecked = Cache::get('security_portal.sync_users');
-        $this->userModel::orderBy('id')
-            ->chunk(10, function ($users) {
-                $payload['data'] = $users;
-                $payload['source_domain'] = config('app.url');
-                $results = $this->http()->post($this->uri.'/client_users', $payload);
-                if ($results->successful()) {
-                    //logger('Success');
-                } else {
-                    throw new RequestErrorException('Error with status '.$results->status());
-                }
-            });
+        if ($this->runAgain()) {
+            $this->userModel::orderBy('id')
+                ->chunk(10, function ($users) {
+                    $payload['data'] = $users;
+                    $payload['source_domain'] = config('app.url');
+                    $results = $this->http()->post($this->uri.'/client_users', $payload);
+                    if ($results->badRequest()) {
+                        throw new RequestErrorException('Error with status '.$results->status());
+                    }
+                });
+        }
+    }
+
+    protected function runAgain() {
+        return  Cache::remember('security_client.sync_users', 3600, function () {
+            return true;
+        });
+
     }
 }
