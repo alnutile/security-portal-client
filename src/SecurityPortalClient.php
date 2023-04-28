@@ -58,8 +58,9 @@ class SecurityPortalClient
         }
     }
 
-    protected function runAgain() {
-        return  Cache::remember('security_client.sync_users', 3600, function () {
+    protected function runAgain()
+    {
+        return Cache::remember('security_client.sync_users', 3600, function () {
             return true;
         });
 

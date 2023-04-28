@@ -1,4 +1,5 @@
 <?php
+
 namespace SundanceSolutions\SecurityPortalClient\Tests;
 
 use Illuminate\Support\Facades\Cache;
@@ -6,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 use Mockery\MockInterface;
 use SundanceSolutions\SecurityPortalClient\Facades\SecurityPortalClient;
 use SundanceSolutions\SecurityPortalClient\SecurityPortalClient as SecurityPortalClientNonFacade;
-use SundanceSolutions\SecurityPortalClient\Tests\User;
 
 class SecurityPortalClientTest extends TestCase
 {
@@ -39,8 +39,8 @@ class SecurityPortalClientTest extends TestCase
 
             $mock->shouldReceive('orderBy->chunk')
                 ->once()
-                ->andReturnUsing(function($chunkSize, $callback) {
-                   $callback(range(1,10));
+                ->andReturnUsing(function ($chunkSize, $callback) {
+                    $callback(range(1, 10));
                 });
         });
 
@@ -49,7 +49,8 @@ class SecurityPortalClientTest extends TestCase
         Http::assertSentCount(1);
     }
 
-    public function test_cache() {
+    public function test_cache()
+    {
         $callCount = 0;
         Cache::shouldReceive('remember')->twice()
             ->withArgs(function ($key, $ttl) {
@@ -67,8 +68,8 @@ class SecurityPortalClientTest extends TestCase
 
             $mock->shouldReceive('orderBy->chunk')
                 ->once()
-                ->andReturnUsing(function($chunkSize, $callback) {
-                    $callback(range(1,10));
+                ->andReturnUsing(function ($chunkSize, $callback) {
+                    $callback(range(1, 10));
                 });
         });
 
@@ -80,6 +81,4 @@ class SecurityPortalClientTest extends TestCase
         Http::assertSentCount(1);
 
     }
-
-
 }
