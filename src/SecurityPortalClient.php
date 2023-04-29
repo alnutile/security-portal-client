@@ -51,7 +51,7 @@ class SecurityPortalClient
                     $payload['data'] = $users;
                     $payload['source_domain'] = config('app.url');
                     $results = $this->http()->post($this->uri.'/client_users', $payload);
-                    if ($results->badRequest()) {
+                    if (!$results->successful()) {
                         throw new RequestErrorException('Error with status '.$results->status());
                     }
                 });
