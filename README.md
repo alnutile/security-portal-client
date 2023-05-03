@@ -20,7 +20,7 @@ The token you can get from logging into our dashboard, clicking under your icon 
 
 ### Scheduler
 ```php
-  $schedule->command('security-portal-client:sync')->hourly();
+$schedule->command('security-portal-client:sync')->environments('production')->hourly();
 ```
 
 ## Config
