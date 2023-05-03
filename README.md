@@ -6,6 +6,10 @@ This will be the client for the soon to be OpenSource portal
 
 ## Setup 
 
+```bash
+composer require sundance-solutions/security-portal-client
+```
+
 ```dotenv
 SECURITY_PORTAL_TOKEN=TOKEN_FROM_APP
 SECURITY_PORTAL_URL=URL_FROM_APP 
